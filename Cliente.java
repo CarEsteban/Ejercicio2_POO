@@ -8,7 +8,16 @@ public class Cliente {
     boolean asignado;
     int amigos;
     String habitacionReservada;
+    int ID_habitacion;
 
+
+    public int getID_habitacion() {
+        return ID_habitacion;
+    }
+
+    public void setID_habitacion(int iD_habitacion) {
+        ID_habitacion = iD_habitacion;
+    }
 
     /**
      * @param nombre

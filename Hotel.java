@@ -41,7 +41,6 @@ public class Hotel {
                             
                             while (aux < clientes.length) { // Utilizar un bucle while para controlar las iteraciones
                                 
-                                System.out.println(aux + " : " + aux);
                                 System.out.println("RESERVA DE HABITACIÓN");
                                 System.out.println("¡Bienvenido a la asignación de habitación de clientes!");
                             
@@ -135,7 +134,7 @@ public class Hotel {
                                 System.out.println("Habitacion inexistente");
                                 System.out.println("===================================");
                             }else{
-                                if(!habitaciones[i].getReservado()){
+                                if(habitaciones[i].getReservado()==false){
                                     System.out.println("===================================");
                                     System.out.println(habitaciones[i]);
                                     System.out.println("===================================");
@@ -172,6 +171,7 @@ public class Hotel {
                                             habitaciones[habi].setReservado(true);
                                             clientes[user].setAsignado(true);
                                             clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
+                                            clientes[user].setID_habitacion(habitaciones[habi].getID());
 
                                             System.out.println("------------------Información del usuario:------------------");
                                             System.out.println(clientes[user]);
@@ -183,6 +183,7 @@ public class Hotel {
                                             habitaciones[habi].setReservado(true);
                                             clientes[user].setAsignado(true);
                                             clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
+                                            clientes[user].setID_habitacion(habitaciones[habi].getID());
 
                                             System.out.println("------------------Información del usuario:------------------");
                                             System.out.println(clientes[user]);
@@ -195,6 +196,7 @@ public class Hotel {
                                             habitaciones[habi].setReservado(true);
                                             clientes[user].setAsignado(true);
                                             clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
+                                            clientes[user].setID_habitacion(habitaciones[habi].getID());
 
                                                 
                                             System.out.println("------------------Información del usuario:------------------");
@@ -267,22 +269,30 @@ public class Hotel {
                                 System.out.println("Preguntando al usuario.....");
                                 Thread.sleep(2300);
 
-                                int decision = rnd.nextInt(2)+1;
+                                int decision = rnd.nextInt(2);
 
-                                
-
-
-
+                                if(decision==0){
+                                    System.out.println("El usuario " + clientes[user].getNombre() +" todavía no desea desalojar la habitación "+ clientes[user].getID_habitacion()+" : " + clientes[user].getHabitacionReservada());
+                                    break;
+                                }else{
+                                    System.out.println("El usuario desalojará la habitación");
+                                    habitaciones[clientes[user].getID_habitacion()].setCliente(null);
+                                    habitaciones[clientes[user].getID_habitacion()].setReservado(false);
+                                    
+                                    Thread.sleep(1000);
+                                    System.out.println("--------------------------------------------------");
+                                    System.out.println("El usuario ha desalojado la habitación con éxito");
+                                    System.out.println("Estado de la habitación:");
+                                    System.out.println(habitaciones[clientes[user].getID_habitacion()]);
+                                    clientes[user]=null;
+                                    break;
+                                }
 
                             default:
                                 System.out.println(opc+" no es una opción válida");
                                 break;
                         }
-                        
-
-
-
-
+                    
                         break;
                     case 0:
                         System.out.println("Saliendo del programa...");
@@ -301,14 +311,6 @@ public class Hotel {
                 menu = 0;
             }
         }
-
-
-
-
-
-
-
-
 
        scan.close();
     }//main
