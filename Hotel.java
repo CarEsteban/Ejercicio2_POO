@@ -5,14 +5,16 @@
  */
 
 import java.util.Scanner;
+import java.util.Random;
 
 
 public class Hotel {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         int opc,menu=1,aux=0,opcion,user,habi;
         Habitacion[] habitaciones = new Habitacion[5];
         Cliente[] clientes = new Cliente[7];
+        Random rnd = new Random();
 
         habitaciones[0] = new Habitacion(1,"Estándar", 10,200.99,false);
         habitaciones[1] = new Habitacion(2,"Deluxe", 5,400.99,false);
@@ -75,7 +77,7 @@ public class Hotel {
                                 
                                 boolean asignado = false;
                             
-                                clientes[aux] = new Cliente(nombre, frecuencia, asignado, amigos);
+                                clientes[aux] = new Cliente(aux+1,nombre, frecuencia, asignado, amigos);
                             
                                 System.out.println("===================================");
                                 System.out.println(clientes[aux]);
@@ -93,12 +95,7 @@ public class Hotel {
                                 aux++; // Incrementar aux para el siguiente ciclo
                             }
                             
-   
                         }
-
-                    
-
-
 
                         break;
                     case 2:
@@ -142,8 +139,6 @@ public class Hotel {
                                     System.out.println("===================================");
                                     System.out.println(habitaciones[i]);
                                     System.out.println("===================================");
-                                }else{
-
                                 }
                             }
                         }
@@ -152,162 +147,142 @@ public class Hotel {
                         opc = scan.nextInt();
                         scan.nextLine();
 
-                        if(opc==0){
-                            break;
-                        }else{
-                            System.out.println("A que usuario le quiere asignar una habitación? (del " + ((clientes.length-clientes.length)+1) + " al " + clientes.length +")");
-                            user = scan.nextInt();
-                            scan.nextLine();
-                            user-- ;
-
-                            if(clientes[user].getHabitacionReservada()!=null){
-                                System.out.println("Este usuario ya tiene habitación");
+                        switch(opc){
+                            case 0:
                                 break;
-                            }else if(clientes[user]!=null){
-                                switch(user){
-                                    case 0:
-                                                                        
-                                        System.out.println("Que habitación le desea asignar? (del " + ((habitaciones.length-habitaciones.length)+1) + " al " + habitaciones.length+")");
-                                        habi = scan.nextInt();
-                                        scan.nextLine();
-                                        habi--;
+                            case 1:
+                                    
+                                System.out.println("A que usuario le quiere asignar una habitación? (del " + ((clientes.length-clientes.length)+1) + " al " + clientes.length +")");
+                                user = scan.nextInt();
+                                scan.nextLine();
+                                user-- ;
 
-                                        if(habitaciones[habi].getCliente() == null && clientes[user].getAmigos()<=habitaciones[habi].getCupo()){
+                                if(clientes[user]!=null){
+                                                            
+                                    System.out.println("Que habitación le desea asignar? (del " + ((habitaciones.length-habitaciones.length)+1) + " al " + habitaciones.length+")");
+                                    habi = scan.nextInt();
+                                    scan.nextLine();
+                                    habi--;
+                                
+                                    if(habitaciones[habi].getCliente() == null && clientes[user].getAmigos()<=habitaciones[habi].getCupo()){
+                                            
+                                        if(habitaciones[habi].getTipoHabitacion() == "Estándar" ){
+
+                                            habitaciones[habi].setCliente(clientes[user].getNombre());
+                                            habitaciones[habi].setReservado(true);
+                                            clientes[user].setAsignado(true);
+                                            clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
+
+                                            System.out.println("------------------Información del usuario:------------------");
+                                            System.out.println(clientes[user]);
+                                            System.out.println("------------------Información de su habitación:------------------");
+                                            System.out.println(habitaciones[habi]);
+
+                                        }else if(habitaciones[habi].getTipoHabitacion() == "Deluxe" && clientes[user].getFrecuencia()=="Frecuente"){
+                                            habitaciones[habi].setCliente(clientes[user].getNombre());
+                                            habitaciones[habi].setReservado(true);
+                                            clientes[user].setAsignado(true);
+                                            clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
+
+                                            System.out.println("------------------Información del usuario:------------------");
+                                            System.out.println(clientes[user]);
+                                            System.out.println("------------------Información de su habitación:------------------");
+                                            System.out.println(habitaciones[habi]);
+
+
+                                        }else if(habitaciones[habi].getTipoHabitacion() == "Suite" && clientes[user].getFrecuencia()=="VIP"){
+                                            habitaciones[habi].setCliente(clientes[user].getNombre());
+                                            habitaciones[habi].setReservado(true);
+                                            clientes[user].setAsignado(true);
+                                            clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
+
                                                 
-                                                if(habitaciones[habi].getTipoHabitacion() == "Estándar" ){
-
-                                                    habitaciones[habi].setCliente(clientes[user].getNombre());
-                                                    habitaciones[habi].setReservado(true);
-                                                    clientes[user].setAsignado(true);
-                                                    clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
-
-                                                    System.out.println("Información del usuario: \n" + clientes[user] + "\nInformación de su habitación: \n" + habitaciones[habi]);
-
-                                                }else if(habitaciones[habi].getTipoHabitacion() == "Deluxe" && clientes[user].getFrecuencia()=="Frecuente"){
-                                                    habitaciones[habi].setCliente(clientes[user].getNombre());
-                                                    habitaciones[habi].setReservado(true);
-                                                    clientes[user].setAsignado(true);
-                                                    clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
-
-                                                    //System.out.println(clientes[user]);
-                                                    //System.out.println(habitaciones[habi]);
-                                                    System.out.println("Información del usuario: \n" + clientes[user] + "\nInformación de su habitación: \n" + habitaciones[habi]);
-
-                                                }else if(habitaciones[habi].getTipoHabitacion() == "Suite" && clientes[user].getFrecuencia()=="VIP"){
-                                                    habitaciones[habi].setCliente(clientes[user].getNombre());
-                                                    habitaciones[habi].setReservado(true);
-                                                    clientes[user].setAsignado(true);
-                                                    clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
-
-                                                    System.out.println("Información del usuario: \n" + clientes[user] + "\nInformación de su habitación: \n" + habitaciones[habi]);
-
-                                                }
-
-                                            }else if(habitaciones[habi].getCliente() != null){
-                                                System.out.println("Lo siento, esta habitación ya tiene dueño");
-                                            }else if(clientes[user].getAmigos()>habitaciones[habi].getCupo()){
-                                                System.out.println("Sus amigos superan la cantidad máxima para la habitación");
-                                        }
-                                                                            
-
-                                        break;
-                                    
-                                    case 1:
-                                        if(clientes[user]==null){
-                                            System.out.println("Lo siento, este usuario no existe");
-                                            break;
+                                            System.out.println("------------------Información del usuario:------------------");
+                                            System.out.println(clientes[user]);
+                                            System.out.println("------------------Información de su habitación:------------------");
+                                            System.out.println(habitaciones[habi]);
                                         }else{
-                                                                        
-                                            System.out.println("Que habitación le desea asignar? (del " + ((habitaciones.length-habitaciones.length)+1) + " al " + habitaciones.length+")");
-                                            habi = scan.nextInt();
-                                            scan.nextLine();
-                                            habi=habi-1;
-
-                                            if(habitaciones[habi].getCliente()==null){
-                                                if(habitaciones[habi].getTipoHabitacion() == "Estándar" && habitaciones[habi].getCupo()>clientes[user].getAmigos()){
-                                                        habitaciones[habi].setCliente(clientes[user].getNombre());
-                                                        habitaciones[habi].setReservado(true);
-                                                        clientes[user].setAsignado(true);
-                                                        clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
-
-                                                        System.out.println(clientes[user]);
-                                                        System.out.println(habitaciones[habi]);
-                                                    
-                                                }else if(habitaciones[habi].getTipoHabitacion() == "Deluxe" && habitaciones[habi].getCupo()>clientes[user].getAmigos()){
-                                                    if(clientes[user].getFrecuencia()=="Frecuente"){
-                                                        
-                                                        habitaciones[habi].setCliente(clientes[user].getNombre());
-                                                        habitaciones[habi].setReservado(true);
-                                                        clientes[user].setAsignado(true);
-                                                        clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
-
-                                                        System.out.println(clientes[user]);
-                                                        System.out.println(habitaciones[habi]);
-                                                    }else{
-                                                        System.out.println("Lo sentimos, no podemos asignarle esta habitación debido a que su frecuencia no es la adecuada");
-                                                    }
-                                                }else if(habitaciones[habi].getTipoHabitacion() == "Suite" && habitaciones[habi].getCupo()>clientes[user].getAmigos()){
-                                                    if(clientes[user].getFrecuencia()=="VIP"){
-                                                        
-                                                        habitaciones[habi].setCliente(clientes[user].getNombre());
-                                                        habitaciones[habi].setReservado(true);
-                                                        clientes[user].setAsignado(true);
-                                                        clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
-
-                                                        System.out.println(clientes[user]);
-                                                        System.out.println(habitaciones[habi]);
-
-                                                    }else{
-                                                        System.out.println("Lo sentimos, no podemos asignarle esta habitación debido a que su frecuencia no es la adecuada ");
-                                                    }
-                                                }else{
-                                                    System.out.println("XD, no deberías estar aca");
-                                                }
-
-                                            }else{
-                                                System.out.println("Lo siento, esta habitación ya tiene dueño");
-                                            }
-                                    
-
-
+                                            System.out.println("Wat, esta habitación no existe");
                                         }
 
-                                        break;
-
-                                    case 2:
-
-                                        break;
-                                    
-                                    case 3:
-
-                                        break;
-
-                                    case 4:
-                                        break;
-                                    
-                                    case 5:
-
-                                        break;
-
-                                    case 6:
-
-                                        break;
-
-                                    default:
-                                        System.out.println("Este usuario no existe");
-                                        break;
-
-                                }
-                            
-                            } 
-                            
+                                    }else if(habitaciones[habi].getCliente() != null){
+                                        System.out.println("Lo siento, esta habitación ya tiene dueño");
+                                    }else if(clientes[user].getAmigos()>habitaciones[habi].getCupo()){
+                                        System.out.println("Sus amigos superan la cantidad máxima para la habitación");
+                                    }else{
+                                        System.out.println("Por alguna casua no se le puede asignar una habitación");
+                                    }
+                                            
+                                }else if(clientes[user]==null){
+                                    System.out.println("Usuario inexistente o no está en la lista de espera");
+                                    break;
+                                }else if(clientes[user].getHabitacionReservada()!=null){
+                                    System.out.println("Este usuario ya tiene habitación");
+                                    break;
+                                }else{
+                                    System.out.println("Error con el usuario");
+                                    break;
+                                } 
+                            default:
+                                System.out.println(opc+" no es una opción válida");
+                                break;
                         }
-
-
-
+                        
                         break;
                     case 3:
                         System.out.println("DESALOJAR HABITACIÓN DE UN CLIENTE");
+
+                        System.out.println("Esta es la lista de los usuarios que tienen ocupada ciertas habitaciones");
+
+                        for(int i = 0; i < clientes.length; i++){
+
+                            if(clientes[i]==null){
+                                System.out.println("===================================");
+                                System.out.println("Todavía no hay un cliente en espera");
+                                System.out.println("===================================");
+                            }else{
+                                if(clientes[i].getAsignado()==true){
+                                    System.out.println("===================================");
+                                    System.out.println(clientes[i]);
+                                    System.out.println("===================================");
+                                }
+                            }
+                        }
+
+                        
+                        System.out.println("Desea desalojar a algun cliente? (1 para sí, 0 para no)");
+                        opc = scan.nextInt();
+                        scan.nextLine();
+
+                        switch(opc){
+                            case 0:
+                                break;
+                            case 1:
+
+                                System.out.println("A que usuario le quiere preguntar sobre desalojar la habitación? (del " + ((clientes.length-clientes.length)+1) + " al " + clientes.length +")");
+                                user = scan.nextInt();
+                                scan.nextLine();
+                                user-- ;
+
+                                System.out.println("Preguntando al usuario.....");
+                                Thread.sleep(2300);
+
+                                int decision = rnd.nextInt(2)+1;
+
+                                
+
+
+
+
+                            default:
+                                System.out.println(opc+" no es una opción válida");
+                                break;
+                        }
+                        
+
+
+
+
                         break;
                     case 0:
                         System.out.println("Saliendo del programa...");
