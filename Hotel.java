@@ -9,6 +9,12 @@ import java.util.Random;
 
 
 public class Hotel {
+    /**
+    * Método principal que ejecuta la lógica del programa.
+    *
+    * @param args 
+    * @throws InterruptedException Si hay un error en la interrupción de hilos.
+    */
     public static void main(String[] args) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         int opc,menu=1,aux=0,opcion,user,habi;
