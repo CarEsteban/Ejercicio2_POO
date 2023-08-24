@@ -158,28 +158,21 @@ public class Hotel {
                             System.out.println("A que usuario le quiere asignar una habitación? (del " + ((clientes.length-clientes.length)+1) + " al " + clientes.length +")");
                             user = scan.nextInt();
                             scan.nextLine();
-                            user=user-1;
+                            user-- ;
 
                             if(clientes[user].getHabitacionReservada()!=null){
-                                System.out.println("Este uuario ya tiene habitación");
+                                System.out.println("Este usuario ya tiene habitación");
                                 break;
-                            }else{
+                            }else if(clientes[user]!=null){
                                 switch(user){
                                     case 0:
-                                        if(clientes[user]==null){
-                                            System.out.println("Lo siento, este usuario no existe");
-                                            break;
-                                        }else{
                                                                         
-                                            System.out.println("Que habitación le desea asignar? (del " + ((habitaciones.length-habitaciones.length)+1) + " al " + habitaciones.length+")");
-                                            habi = scan.nextInt();
-                                            scan.nextLine();
-                                            habi=habi-1;
+                                        System.out.println("Que habitación le desea asignar? (del " + ((habitaciones.length-habitaciones.length)+1) + " al " + habitaciones.length+")");
+                                        habi = scan.nextInt();
+                                        scan.nextLine();
+                                        habi--;
 
-                                            System.out.println(clientes[user].getAmigos());
-                                            System.out.println(habitaciones[habi].getCupo());
-
-                                            if(habitaciones[habi].getCliente() == null && clientes[user].getAmigos()<=habitaciones[habi].getCupo()){
+                                        if(habitaciones[habi].getCliente() == null && clientes[user].getAmigos()<=habitaciones[habi].getCupo()){
                                                 
                                                 if(habitaciones[habi].getTipoHabitacion() == "Estándar" ){
 
@@ -188,36 +181,34 @@ public class Hotel {
                                                     clientes[user].setAsignado(true);
                                                     clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
 
-                                                    System.out.println(clientes[user]);
-                                                    System.out.println(habitaciones[habi]);
-                                                    
+                                                    System.out.println("Información del usuario: \n" + clientes[user] + "\nInformación de su habitación: \n" + habitaciones[habi]);
+
                                                 }else if(habitaciones[habi].getTipoHabitacion() == "Deluxe" && clientes[user].getFrecuencia()=="Frecuente"){
                                                     habitaciones[habi].setCliente(clientes[user].getNombre());
                                                     habitaciones[habi].setReservado(true);
                                                     clientes[user].setAsignado(true);
                                                     clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
 
-                                                    System.out.println(clientes[user]);
-                                                    System.out.println(habitaciones[habi]);
+                                                    //System.out.println(clientes[user]);
+                                                    //System.out.println(habitaciones[habi]);
+                                                    System.out.println("Información del usuario: \n" + clientes[user] + "\nInformación de su habitación: \n" + habitaciones[habi]);
+
                                                 }else if(habitaciones[habi].getTipoHabitacion() == "Suite" && clientes[user].getFrecuencia()=="VIP"){
                                                     habitaciones[habi].setCliente(clientes[user].getNombre());
                                                     habitaciones[habi].setReservado(true);
                                                     clientes[user].setAsignado(true);
                                                     clientes[user].setHabitacionReservada(habitaciones[habi].getTipoHabitacion());
 
-                                                    System.out.println(clientes[user]);
-                                                    System.out.println(habitaciones[habi]);
+                                                    System.out.println("Información del usuario: \n" + clientes[user] + "\nInformación de su habitación: \n" + habitaciones[habi]);
+
                                                 }
 
                                             }else if(habitaciones[habi].getCliente() != null){
                                                 System.out.println("Lo siento, esta habitación ya tiene dueño");
                                             }else if(clientes[user].getAmigos()>habitaciones[habi].getCupo()){
                                                 System.out.println("Sus amigos superan la cantidad máxima para la habitación");
-                                            }
-                                    
-
-
                                         }
+                                                                            
 
                                         break;
                                     
